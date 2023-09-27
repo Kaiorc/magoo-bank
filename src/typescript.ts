@@ -16,8 +16,15 @@ type Transacao = {
     valor: number;
 }
 
-const novaTransacao: Transacao = {
-    tipoTransacao: "",
+// Enum
+enum TipoTransacao {
+    DEPOSITO = "Depósito",
+    TRANSFERENCIA = "Transferência",
+    PAGAMENTO_BOLETO = "Pagamento de Boleto"
+}
+ 
+const novaTransacao: Transacao =  {
+    tipoTransacao: TipoTransacao.PAGAMENTO_BOLETO,
     data: new Date(),
     valor: 0
 }
