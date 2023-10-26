@@ -29,7 +29,7 @@ elementoFormulario.addEventListener("submit", function (event) {
         return;
     }
     // Atualiza o elemento HTML que exibe o saldo com o novo valor do saldo
-    elementoSaldo.textContent = saldo.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    elementoSaldo.textContent = formatarMoeda(saldo);
     // Cria um objeto com os valores da transação e exibe-o no console
     const novaTransacao = {
         tipoTransacao: tipoTransacao,
