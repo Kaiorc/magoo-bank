@@ -1,5 +1,5 @@
-type Transacao = {
-    tipoTransacao: string;
-    valor: number;
-    data: Date;
+enum TipoTransacao {
+    DEPOSITO = "Depósito",
+    TRANSFERENCIA = "Transferência",
+    PAGAMENTO_BOLETO = "Pagamento de Boleto"
 }

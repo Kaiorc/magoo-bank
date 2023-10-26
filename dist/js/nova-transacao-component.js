@@ -11,14 +11,17 @@ elementoFormulario.addEventListener("submit", function (event) {
     const inputValor = elementoFormulario.querySelector("#valor");
     const inputData = elementoFormulario.querySelector("#data");
     // Converte os valores dos campos para os tipos corretos
+    // No tipoTransacao, o valor é convertido para o tipo TipoTransacao, ".value" retorna uma string,
+    // então é necessário fazer um cast para o tipo TipoTransacao, de forma que explicitamos que o valor
+    // de inputTipoTransacao.value deve ser um dos valores do enum TipoTransacao
     let tipoTransacao = inputTipoTransacao.value;
     let valor = inputValor.valueAsNumber;
     let data = new Date(inputData.value);
     // Atualiza o saldo dependendo do tipo de transação selecionado
-    if (tipoTransacao == "Depósito") {
+    if (tipoTransacao == TipoTransacao.DEPOSITO) {
         saldo += valor;
     }
-    else if (tipoTransacao == "Transferência" || tipoTransacao == "Pagamento de Boleto") {
+    else if (tipoTransacao == TipoTransacao.TRANSFERENCIA || tipoTransacao == TipoTransacao.PAGAMENTO_BOLETO) {
         saldo -= valor;
     }
     else {
@@ -26,7 +29,7 @@ elementoFormulario.addEventListener("submit", function (event) {
         return;
     }
     // Atualiza o elemento HTML que exibe o saldo com o novo valor do saldo
-    elementoSaldo.textContent = saldo.toString();
+    elementoSaldo.textContent = saldo.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     // Cria um objeto com os valores da transação e exibe-o no console
     const novaTransacao = {
         tipoTransacao: tipoTransacao,
