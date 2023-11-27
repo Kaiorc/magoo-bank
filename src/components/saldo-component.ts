@@ -1,8 +1,6 @@
 import { FormatoData } from "../types/FormatoData.js";
+import Conta from "../types/conta.js";
 import { formatarData, formatarMoeda } from "../utils/formatters.js";
-
-// Define o saldo inicial da conta
-let saldo = 3000;
 
 alert("Testando compilação do TS-")
 
@@ -11,20 +9,25 @@ const elementoSaldo = document.querySelector(".saldo-valor .valor") as HTMLEleme
 const elementoDataAcesso = document.querySelector(".block-saldo time") as HTMLElement;
 
 if(elementoDataAcesso != null) {
-    const dataAcesso: Date = new Date()
-
-    elementoDataAcesso.textContent = formatarData(dataAcesso, FormatoData.DIA_SEMANA_DIA_MES_ANO);
+    elementoDataAcesso.textContent = formatarData(Conta.getDataAcesso(), FormatoData.DIA_SEMANA_DIA_MES_ANO);
 }
 
-export function getSaldo(): number {
-    return saldo;
-}
+renderizarSaldo()
 
-atualizarSaldo(saldo)
-
-export function atualizarSaldo(novoSaldo: number): void {
-    saldo = novoSaldo;
+// Busca os dados do "conta.ts" e atualiza o saldo na tela
+function renderizarSaldo(): void {
     if (elementoSaldo != null) {
-        elementoSaldo.textContent = formatarMoeda(saldo);
+        elementoSaldo.textContent = formatarMoeda(Conta.getSaldo());
     }
 }
+
+// A única coisa que estará disponível para uso do componente de saldo é o objeto 
+// SaldoComponent, que irá representar todo o componente, com o método atualizar() 
+// que chama a função interna renderizarSaldo().
+const SaldoComponent = {
+    atualizar() {
+        renderizarSaldo();
+    }
+}
+
+export default SaldoComponent;
