@@ -1,3 +1,7 @@
+import { TipoTransacao } from "../types/TipoTransacao.js";
+import { Transacao } from "../types/Transacao.js";
+import { atualizarSaldo, getSaldo } from "./saldo-component.js";
+
 // Obtém o formulário de transação e adiciona um listener de evento para quando o formulário for enviado
 const elementoFormulario = document.querySelector(".block-nova-transacao form") as HTMLFormElement;
 
@@ -7,7 +11,6 @@ elementoFormulario.addEventListener("submit", function(event) {
         alert("Por favor, preencha todos os campos da transação!");
         return;
     }
-
 
     // Obtém os valores dos campos do formulário
     const inputTipoTransacao = elementoFormulario.querySelector("#tipoTransacao") as HTMLSelectElement;
@@ -21,6 +24,7 @@ elementoFormulario.addEventListener("submit", function(event) {
     let tipoTransacao: TipoTransacao = inputTipoTransacao.value as TipoTransacao;
     let valor: number = inputValor.valueAsNumber;
     let data: Date = new Date(inputData.value);
+    let saldo: number = getSaldo();
 
     // Atualiza o saldo dependendo do tipo de transação selecionado
     if (tipoTransacao == TipoTransacao.DEPOSITO) {
@@ -32,8 +36,8 @@ elementoFormulario.addEventListener("submit", function(event) {
         return;
     }
 
-    // Atualiza o elemento HTML que exibe o saldo com o novo valor do saldo
-    elementoSaldo.textContent = formatarMoeda(saldo);
+    // Mantendo a responsabilidade de tudo relacionado ao saldo, no arquivo "saldo-component.ts"
+    atualizarSaldo(saldo);
 
     // Cria um objeto com os valores da transação e exibe-o no console
     const novaTransacao: Transacao = {
